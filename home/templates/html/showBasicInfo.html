@@ -1,0 +1,22 @@
+{% extends 'html/base.html' %}
+{% block content %}
+<br>
+<form method="get" action="{% url 'changeBasicInfo' %}">
+
+
+name:<input type="text" name="name" value={{name}}><br>
+city:<input type="text" name="city" value={{city}}><br>
+country:<input type="text" name="country" value={{country}}><br>
+email:<input type="email" name="email" value={{email}} required><br>
+blood group :<input type="text" name="bloodGroup" value={{bloodGroup}} required><br>
+bio :<input type="text" name="bio" value={{bio}}  ><br>
+<input type="submit" value="change" name="change" >
+<br>balance: {{balance}}<br>
+</form>
+<form method="get" action="{% url 'recharge' %}" >
+    <input type="number" min="1" name="rechargeAmount"><br>
+    <input type="submit" value="recharge" name="change" >
+</form>
+
+
+{% endblock content %}

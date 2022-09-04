@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+    {% if msg is not none %}
+
+    {{msg}}
+    {% endif %}
+    
+
+    <form method="post" action="{% url 'createPostHandle' %}">
+        {% csrf_token %}
+            <input type="text" name="postcontent" placeholder="write post">
+                      
+            <select name="audience" >
+                <option value="public">public</option>
+                <option value="followers">followers</option>
+                <option value="onlyme">only me</option>
+            </select>
+
+            <input type="checkbox" name="hideReaction" value="hideReact">
+            <label for "hideReaction">hide reaction</label><br>
+        
+            <input type="text" name="tags" placeholder="add tags seperated by space">
+            <input type="number"  name="price" value="0" placeholder="put the amount if the post is paid">
+            <!-- <a href="reaction"> select reaction</a> -->
+            <input type="file"  name="img" accept="image/*">
+            <input type="submit" name="create">
+    </form>
+    
+</body>
+</html>

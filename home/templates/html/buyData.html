@@ -1,0 +1,51 @@
+{% extends 'html/base.html' %}
+{% block content %}
+
+{% if msg is not none %}
+
+    {{msg}}
+
+{% endif %}
+
+<form method="get" action="{% url 'buyDataHandle'%}" >
+
+
+    <div style="margin: 10px;">
+        <p>maximum amount of users (less than or equal to  {{maxData}}):</p>
+
+        <input type="number" min="1" max="{{maxData}}" placeholder="no of data" name="maxUsr" value="{{maxData}}">
+    
+    </div>
+    <div style="margin: 10px;">
+        <p>minimum age:</p>
+
+        <input type="number" min="18"  placeholder="age" name="age" value="18">
+    
+    </div>
+
+    <div style="float: left;">
+    <p>I want data of :</p>
+    <input type="radio" id="gender1" name="gender" value="any" checked>
+    <label for="gender1">any gender</label><br>
+    <input type="radio" id="age2" name="gender" value="male">
+    <label for="age2">male</label><br>  
+    <input type="radio" id="age3" name="gender" value="female">
+    <label for="age3">female</label><br><br>
+    
+    </div>
+
+    <div style="float: left; margin-left: 20px;">
+        <p>location :</p>
+        <input type="text" placeholder="location" name="location" value="any" >
+        
+    </div>
+
+    
+    
+    <div style="position: absolute; bottom: -10px;">
+    <input type="submit" value="buy">
+    </div>
+</form>
+
+
+{% endblock content %}

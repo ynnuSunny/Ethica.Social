@@ -1,0 +1,39 @@
+{% extends 'html/base.html' %}
+{% block content %}
+
+<ul>
+    {% for x in posts %}
+      {% if x.type == 'regular' %}
+      
+      <a href="{% url 'othersProfile' %}?nid={{x.posterNid}}">{{x.posterName}}</a>
+      
+      
+       <br>
+       audience:{{ x.viewers }}<br> posted on : {{x.date}}<br>
+        post:{{ x.content }}<br>
+        likes: {{ x.likes }}<br>
+        <form method="get" action="{% url 'makeOtherComment' %}">
+                {% csrf_token %}
+                <input type="text" placeholder="write comment" name="comment">
+                <input type = "hidden" name="postid" value={{x.postNo}}>
+                <input type = "hidden" name="commenter" value={{seeingNid}}>
+                <input type = "hidden" name="nid" value={{nid}}>
+                <input type = "submit" value="comment" name="commentBtn">
+                
+        </form>
+        comment:<br>
+        {% for c in x.comment %}
+          <a href="{% url 'othersProfile' %}?nid={{c.commenterNid}}">{{c.commenterName}}</a>
+          
+        {{c.comment}}
+         <br>
+           
+        {% endfor %}
+      <br><br>
+      {% endif %}
+    {% endfor %}
+    
+</ul>
+
+
+{% endblock content %}

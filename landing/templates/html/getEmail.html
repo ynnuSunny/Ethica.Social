@@ -1,0 +1,12 @@
+{% extends 'html/include.html' %}
+{% block content %}
+{% if msg is not none %}
+
+    {{msg}}
+{% endif %}
+<form method="get" action="{% url 'getEmail' %}" >
+    <input type="email" placeholder="enter your email" name="usremail">
+    <input type="submit" name="submit">
+</form>
+
+{% endblock content %}

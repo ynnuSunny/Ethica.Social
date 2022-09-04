@@ -1,0 +1,8 @@
+{% extends 'html/base.html' %}
+{% block content %}
+<form method ="get" action="{% url 'logout' %}">
+    <input type="submit" name="logout" value="log out">
+</form>
+<a href="{% url 'buyData' %}" > buy Data</a>
+
+{% endblock content %}
