@@ -16,7 +16,9 @@ import gridfs
 from sympy import content
 from bson.objectid import ObjectId
 from googletrans import Translator
-
+from django.core.files.storage import FileSystemStorage
+from PIL import Image
+import PIL
 
 class DBConnect:
    __instance = None
@@ -445,7 +447,11 @@ def createPostHandle(request):
 
     photo=None
     try:
-        photo=request.POST['img']
+        uploaded_file = request.FILES['photo']
+        fs = FileSystemStorage()
+        fs.save(uploaded_file.name, uploaded_file)
+        #name = fs.save(uploaded_file.name, uploaded_file)
+
     except:
         pass
     

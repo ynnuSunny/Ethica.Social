@@ -9,7 +9,7 @@
     {% endif %}
     
 
-    <form method="post" action="{% url 'createPostHandle' %}">
+    <form method="post" enctype="multipart/form-data" action="{% url 'createPostHandle' %}">
         {% csrf_token %}
             <input type="text" name="postcontent" placeholder="write post">
                       
@@ -25,7 +25,7 @@
             <input type="text" name="tags" placeholder="add tags seperated by space">
             <input type="number"  name="price" value="0" placeholder="put the amount if the post is paid">
             <!-- <a href="reaction"> select reaction</a> -->
-            <input type="file"  name="img" accept="image/*">
+            <input type="file" name="photo">
             <input type="submit" name="create">
     </form>
     
