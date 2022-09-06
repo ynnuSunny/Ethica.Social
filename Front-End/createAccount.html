@@ -1,0 +1,151 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ethica.Social</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/line-awesome.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/line-awesome-font-awesome.min.css' %}">
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/slick/slick.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/slick/slick-theme.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}">
+</head>
+
+<body class="sign-in">
+    <div class="wrapper">
+        <div class="sign-in-page">
+            <div class="signin-popup">
+                <div class="signin-pop">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="cmp-info">
+                                <div class="cm-logo">
+                                    <img src="{% static 'images/cm-logo.png' %}" alt="">
+                                    <p>Ethica.Social, is a global social media platform and social networking where we care about user mental health.</p>
+                                </div>
+                                <img src="{% static 'images/cm-main-img.png' %}" alt="">
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="login-sec">
+                                <ul class="sign-control">
+                                    
+                                </ul>
+                                {% block content %}
+                                <div class="sign_in_sec current" id="tab-2">
+                                    <h3>Create Account</h3>
+                                    {% if msg is not none %}
+
+                                               {{msg}}
+
+                                    {% endif %}
+                                    <!-- <div class="signup-tab">
+                                        <i class="fa fa-long-arrow-left"></i>
+                                        <h2><a href="https://gambolthemes.net/cdn-cgi/l/email-protection"
+                                                class="__cf_email__"
+                                                data-cfemail="7c161314121813193c19041d110c1019521f1311">[email&#160;protected]</a>
+                                        </h2>
+                                        <ul>
+                                            <li data-tab="tab-3" class="current"><a href="#" title="">User</a></li>
+                                            <li data-tab="tab-4"><a href="#" title="">Company</a></li>
+                                        </ul>
+                                    </div> -->
+                                    <div class="dff-tab current" id="tab-3">
+                                        <form method="post" action="{% url 'createAccountDb' %}">
+                                            {% csrf_token %}
+                                            <div class="row">
+                                                <div class="col-lg-12 no-pdd">
+                                                    <div class="sn-field">
+                                                        <input type="text" name="name" placeholder="Full Name">
+                                                        <i class="la la-user"></i>
+                                                    </div>
+                                                </div>
+                                                <!-- <div class="col-lg-12 no-pdd">
+                                                    <div class="sn-field">
+                                                        <input type="text" name="country" placeholder="Country">
+                                                        <i class="la la-globe"></i>
+                                                    </div>
+                                                </div> -->
+                                                <div class="col-lg-12 no-pdd">
+                                                    <div class="sn-field">
+                                                        <input type="text" name="nid" placeholder="National ID">
+                                                        <i class="la la-globe"></i>
+                                                    </div>
+                                                </div>
+                                               
+                                                <div class="col-lg-12 no-pdd">
+                                                    <div class="sn-field">
+                                                        <input type="email" name="email" placeholder="Email">
+                                                        <i class="la la-globe"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 no-pdd">
+                                                    <div class="sn-field">
+                                                        <input type="password" name="password"
+                                                            placeholder="Password">
+                                                        <i class="la la-lock"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 no-pdd">
+                                                    <div class="checky-sec st2">
+                                                        <!-- <div class="fgt-sec">
+                                                            <input type="checkbox" name="cc" id="c2">
+                                                            <label for="c2">
+                                                                <span></span>
+                                                            </label>
+                                                            <small>Yes, I understand and agree to the workwise Terms &
+                                                                Conditions.</small>
+                                                        </div> -->
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12 no-pdd">
+                                                    <button type="submit" >Get Started</button>
+                                                </div>
+                                            </div>
+                                            {% endblock content %}
+                                        </form>
+
+                                        <div class="login-resources">
+                    
+                                            <ul>
+                                                <li><a href="{% url 'login'%}" title=""  style="background-color: #e75348"><i  style="background-color: #e75348"></i>Already have an Account?</a></li>
+                                               
+                                            </ul>
+                                        </div>
+                                    </div>
+                                   
+                                </div>
+                               
+                               
+                            </div>
+                            <br >
+                                    
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <script data-cfasync="false" src="../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/popper.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/slick/slick.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+</body>
+
+
+
+</html>
