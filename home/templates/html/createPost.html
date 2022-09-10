@@ -7,9 +7,9 @@
 
     {{msg}}
     {% endif %}
-    
 
-    <form method="post" enctype="multipart/form-data" action="{% url 'createPostHandle' %}">
+
+    <form method="post" action="{% url 'createPostHandle' %}" enctype="multipart/form-data">
         {% csrf_token %}
             <input type="text" name="postcontent" placeholder="write post">
                       
@@ -18,7 +18,11 @@
                 <option value="followers">followers</option>
                 <option value="onlyme">only me</option>
             </select>
-
+            <br>
+            {% for i in reactions %}
+            <input type="checkbox" name="reaction" value="{{i}}"> {{i}}
+            {% endfor %}
+            <br>
             <input type="checkbox" name="hideReaction" value="hideReact">
             <label for "hideReaction">hide reaction</label><br>
         

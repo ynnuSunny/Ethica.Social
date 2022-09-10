@@ -1,8 +1,31 @@
 {% extends 'html/base.html' %}
 {% block content %}
+
+{% if msg is not none %}
+
+    {{msg}}
+
+{% endif %}
 <form method ="get" action="{% url 'logout' %}">
     <input type="submit" name="logout" value="log out">
 </form>
 <a href="{% url 'buyData' %}" > buy Data</a>
+<form method="get" action="{%  url 'toggleCellData' %} ">
+    <input type="submit"  name="sellDataToggle" value="{{toggle}}  celling data">
+</form>
+<br><br>
+<form method ='get' action="{% url 'updateUsrMaxPostView' %}">
+    <input type="number" min="1" placeholder="maximum post view limit" name="maxPostLimit">
+    <input type = "submit" value="set" name="set">
+</form>
 
+
+<br>
+buy reactions
+
+{% for i in reactionBuy %}
+<form method="get" action="{%  url 'buyReaction' %} ">
+    <input type="submit"  name="buyReaction" value="{{i}}">
+</form>
+{% endfor %}
 {% endblock content %}

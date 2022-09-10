@@ -1,0 +1,12 @@
+{% extends 'html/base.html' %}
+{% block content %}
+    {% for r in react %}
+        {{r.reactName}}
+        {% for person in r.reactorInfo %}
+            <img src= "{{person.dp}}"> <br><br>
+            <a href="{% url 'othersProfile' %}?nid={{person.reactNid}}">{{person.reactName}}</a>
+        {% endfor %}
+    {% endfor %}
+
+{% endblock content %}
+

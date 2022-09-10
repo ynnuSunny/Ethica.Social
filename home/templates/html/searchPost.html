@@ -4,14 +4,25 @@
 <ul>
     {% for x in posts %}
       {% if x.type == 'regular' %}
-      
+      <img src= "{{x.dp}}"> 
       <a href="{% url 'othersProfile' %}?nid={{x.posterNid}}">{{x.posterName}}</a>
       
       
        <br>
        audience:{{ x.viewers }}<br> posted on : {{x.date}}<br>
         post:{{ x.content }}<br>
-        likes: {{ x.likes }}<br>
+        <a href="{% url 'viewReactions' %}?postid={{x.postNo}}">reactions: {{ x.likes }}</a><br>
+        
+        {% for re in x.reactTypes %}
+          <form method="get" action="{% url 'meReact' %}">
+            <input type = "hidden" name="postid" value={{x.postNo}}>
+            <input type = "hidden" name="reactName" value={{re}}>
+            <input type = "hidden" name="reactorNid" value={{seeingNid}}>
+            <input type = "submit" value="{{re}}" name="reactBtn">
+          </form>
+        
+        {% endfor %}
+        
         <form method="get" action="{% url 'makeOtherComment' %}">
                 {% csrf_token %}
                 <input type="text" placeholder="write comment" name="comment">
@@ -21,6 +32,12 @@
                 <input type = "submit" value="comment" name="commentBtn">
                 
         </form>
+        <a href="{% url 'seeTranslated' %}?postId={{x.postNo}}">translate</a>
+        <br>
+        {% if x.photo is not none%}
+      
+          <img src= "{{x.photo}}"> <br>
+        {% endif %}
         comment:<br>
         {% for c in x.comment %}
           <a href="{% url 'othersProfile' %}?nid={{c.commenterNid}}">{{c.commenterName}}</a>

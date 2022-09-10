@@ -18,5 +18,13 @@ bio :<input type="text" name="bio" value={{bio}}  ><br>
     <input type="submit" value="recharge" name="change" >
 </form>
 
+<br>
+change dp:
+<form method="post" action="{% url 'updateDp' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="dp">
+    <input type="submit" name="change">
+</form>
+
 
 {% endblock content %}

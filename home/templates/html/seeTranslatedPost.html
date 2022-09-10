@@ -5,16 +5,22 @@
 audience:{{ viewers }}<br> posted on : {{date}}<br>
         post:{{ content }}<br>
         translate:{{translatedContent}}<br>
-        likes: {{ likes }}<br>
-       
+        reaction: {{ likes }}<br>
+        {% if photo is not none%}
+          
+          <img src= "{{photo}}"> <br>
+          {% endif %}
+          
         comment:<br>
+        
         {% for c in comment %}
           <a href="{% url 'othersProfile' %}?nid={{c.commenterNid}}">{{c.commenterName}}</a>
           
           {{c.comment}}
           <br> 
+          {% endfor %}
           
            
-      {% endfor %}
+     
 
 {% endblock content %}
