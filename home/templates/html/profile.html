@@ -1,8 +1,10 @@
 {% extends 'html/base.html' %}
 {% block content %}
 <br>
-<a href="{% url 'followers'%}">followers</a>
-<a href="{% url 'followings'%}">followings</a>
+<a href="{% url 'followers'%}">followers
+  <br>{{noOfFollowers}}</a>
+<a href="{% url 'followings'%}">followings
+<br> {{noOfFollowings}}</a>
 <a href="{% url 'createPost'%}">post</a>
 <a href="{% url 'showBasicInfo'%}">edit basic info</a>
 <a href="{% url 'activityLog'%}">activity log</a>
@@ -10,6 +12,14 @@
 
 <br>
 <img src= "{{dp}}"> <br><br>
+change dp:
+<form method="post" action="{% url 'updateDp' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="dp">
+    <input type="submit" name="change">
+</form>
+
+
 {{name}}
 <br>
 {{bio}}<br>

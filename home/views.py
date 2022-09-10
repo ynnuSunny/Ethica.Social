@@ -371,6 +371,8 @@ def profilePage(request):
         "dp":fs.url(usr['dp']),
         "name":usr["name"],
         "bio":usr['bio'],
+        "noOfFollowers":len(usr['followers']),
+        "noOfFollowings":len(usr['followings'])
     }
     
     
