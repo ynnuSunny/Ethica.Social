@@ -1201,6 +1201,7 @@ main {
 
 .usy-dt {
     float: left
+    border-radius: 50%;
 }
 
 .usy-dt img {

@@ -34,7 +34,7 @@
                     </div>
                     <div class="search-bar">
                         <form method = 'get', action="{% url 'search' %}">
-                            <input type="text" name="search" placeholder="Search...">
+                            <input type="text" name="searchValue" placeholder="Search...">
                             <select name="searchBy" >
                                 <option value="name">Name</option>
                                 <option value="nid">Nid</option>
@@ -54,9 +54,9 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="{% url 'news'%}" title="">
+                                <a href="{% url 'notification'%}" title="">
                                     <span><img src="{% static 'images/icon2.png' %}" alt=""></span>
-                                    News
+                                    Notification
                                 </a>
                                 <!-- <ul>
                                     <li><a href="companies.html" title="">Companies</a></li>
@@ -66,7 +66,7 @@
                             <li>
                                 <a href="{% url 'bloodDonatin'%}" title="">
                                     <span><img src="{% static 'images/icon3.png' %}" alt=""></span>
-                                    Blood Donatin
+                                    Blood Donation
                                 </a>
                             </li>
                             <li>
@@ -134,7 +134,8 @@
                             </div>
                             <h3>Setting</h3>
                             <ul class="us-links">
-                                <li><a href="profile-account-setting.html" title="">Account Setting</a></li>
+
+                                <li><a href="{% url 'settings'%}" title="">Account Setting</a></li>
                                 <li><a href="#" title="">Privacy</a></li>
                                 <li><a href="#" title="">Faqs</a></li>
                                 <li><a href="#" title="">Terms & Conditions</a></li>
