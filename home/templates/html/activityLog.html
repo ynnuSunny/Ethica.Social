@@ -1,10 +1,228 @@
-{% extends 'html/base.html' %}
-{% block content %}
-
-{% for x in usrActivity %}
-    {{x}}<br>
 
 
-{% endfor %}
 
-{% endblock content %}
+
+
+
+
+
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>WorkWise Html Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/line-awesome.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/line-awesome-font-awesome.min.css' %}">
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.mCustomScrollbar.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/slick/slick.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/slick/slick-theme.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}">
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <div class="container">
+                <div class="header-data">
+                    <div class="logo">
+                        <a href="{% url 'newsFeed'%}" title=""><img src="{% static 'images/logo.png' %}" alt=""></a>
+                    </div>
+                    <div class="search-bar">
+                        <form method = 'get', action="{% url 'search' %}">
+                            <input type="text" name="searchValue" placeholder="Search...">
+                            <select name="searchBy" >
+                                <option value="name">Name</option>
+                                <option value="nid">Nid</option>
+                                <option value="location">Location</option>
+                                <option value="post">Post</option>
+                            </select>
+                            <button type="submit"><i class="la la-search"></i></button>
+                            <!-- <input type="submit" name="search" value="search"> -->
+                        </form>
+                    </div>
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="{% url 'newsFeed'%}" title="">
+                                    <span><img src="{% static 'images/icon1.png' %}" alt=""></span>
+                                    Home
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'notification'%}" title="">
+                                    <span><img src="{% static 'images/icon2.png' %}" alt=""></span>
+                                    Notification
+                                </a>
+                                <!-- <ul>
+                                    <li><a href="companies.html" title="">Companies</a></li>
+                                    <li><a href="company-profile.html" title="">Company Profile</a></li>
+                                </ul> -->
+                            </li>
+                            <li>
+                                <a href="{% url 'bloodDonatin'%}" title="">
+                                    <span><img src="{% static 'images/icon3.png' %}" alt=""></span>
+                                    Blood Donation
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'profile'%}" title="">
+                                    <span><img src="{% static 'images/icon4.png' %}" alt=""></span>
+                                    Profiles
+                                </a>
+                                <ul>
+                                    <li><a href="user-profile.html" title="">User Profile</a></li>
+                                    <li><a href="{% url 'profile'%}" title="">my-profile-feed</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="{% url 'followersPost'%}" title="">
+                                    <span><img src="{% static 'images/icon5.png' %}" alt=""></span>
+                                    Followers Post
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'message'%}" title="" class="not-box-openm">
+                                    <span><img src="{% static 'images/icon6.png' %}" alt=""></span>
+                                    Messages
+                                </a>
+
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="menu-btn">
+                        <a href="#" title=""><i class="fa fa-bars"></i></a>
+                    </div>
+                    <div class="user-account">
+                        <div class="user-info">
+                            <img src="{% static 'images/resources/user.png' %}" alt="">
+                            <a href="#" title="">John</a>
+                            <i class="la la-sort-down"></i>
+                        </div>
+                        <div class="user-account-settingss">
+                            <h3>Online Status</h3>
+                            <ul class="on-off-status">
+                                <li>
+                                    <div class="fgt-sec">
+                                        <input type="radio" name="cc" id="c5">
+                                        <label for="c5">
+                                            <span></span>
+                                        </label>
+                                        <small>Online</small>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="fgt-sec">
+                                        <input type="radio" name="cc" id="c6">
+                                        <label for="c6">
+                                            <span></span>
+                                        </label>
+                                        <small>Offline</small>
+                                    </div>
+                                </li>
+                            </ul>
+                            <h3>Custom Status</h3>
+                            <div class="search_form">
+                                <form>
+                                    <input type="text" name="search">
+                                    <button type="submit">Ok</button>
+                                </form>
+                            </div>
+                            <h3>Setting</h3>
+                            <ul class="us-links">
+
+                                <li><a href="{% url 'settings'%}" title="">Account Setting</a></li>
+                                <li><a href="#" title="">Privacy</a></li>
+                                <li><a href="#" title="">Faqs</a></li>
+                                <li><a href="#" title="">Terms & Conditions</a></li>
+                            </ul>
+                            <h3 class="tc"><a href="sign-in.html" title="">Logout</a></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <section class="profile-account-setting">
+            <div class="container">
+                <div class="account-tabs-setting">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <!-- <div class="acc-leftbar"> -->
+                                <!-- <div class="nav nav-tabs" id="nav-tab" role="tablist"> -->
+
+                                    <!-- <a class="nav-item nav-link" id="nav-notification-tab" data-toggle="tab"
+                                        href="#nav-notification" role="tab" aria-controls="nav-notification"
+                                        aria-selected="true"><i class="fa fa-flash"></i>Notifications</a>
+
+                                    <a class="nav-item nav-link active" id="nav-acc-tab" data-toggle="tab"
+                                        href="#nav-acc" role="tab" aria-controls="nav-acc" aria-selected="true"><i
+                                            class="la la-cogs"></i>Account Setting</a> -->
+
+
+
+
+                                <!-- </div> -->
+                            <!-- </div> -->
+                        </div>
+                        <div class="col-lg-9">
+
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-acc" role="tabpanel"
+                                aria-labelledby="nav-acc-tab">
+                                <div class="acc-setting">
+                                    <h3>Your Activity Log</h3>
+
+                                        <div class="notifications-list">
+                                            {% block content %}
+                                             {% for x in usrActivity %}
+                                            <div class="notfication-details">
+<!--                                                <div class="noty-user-img">-->
+<!--                                                    <img src="images/resources/ny-img1.png" alt="">-->
+<!--                                                </div>-->
+                                                <div class="notification-info">
+                                                    <h2>{{x}}</h2>
+<!--                                                    <span>2 min ago</span>-->
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+
+                                            {% endblock content %}
+
+
+                                       </div>
+                            </div>
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/popper.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.mCustomScrollbar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/slick/slick.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+</body>
+
+
+</html>
