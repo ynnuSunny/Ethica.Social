@@ -1,23 +1,136 @@
 {% extends 'html/base.html' %}
-{% block content %}
-<br>
-<form method="get" action="{% url 'changeBasicInfo' %}">
+
+<!DOCTYPE html>
+<html>
 
 
-name:<input type="text" name="name" value={{name}}><br>
-city:<input type="text" name="city" value={{city}}><br>
-country:<input type="text" name="country" value={{country}}><br>
-email:<input type="email" name="email" value={{email}} required><br>
-blood group :<input type="text" name="bloodGroup" value={{bloodGroup}} required><br>
-bio :<input type="text" name="bio" value={{bio}}  ><br>
-<input type="submit" value="change" name="change" >
-<br>balance: {{balance}}<br>
-</form>
-<form method="get" action="{% url 'recharge' %}" >
-    <input type="number" min="1" name="rechargeAmount"><br>
-    <input type="submit" value="recharge" name="change" >
-</form>
+<head>
+   {% load static %}
+    <meta charset="UTF-8">
+    <title>WorkWise Html Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/line-awesome.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/line-awesome-font-awesome.min.css' %}">
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.mCustomScrollbar.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/slick/slick.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/slick/slick-theme.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}">
+</head>
 
-<br>
+<body>
+    <div class="wrapper">
+        {% block content %}
+        <section class="profile-account-setting">
+            <div class="container">
+                <div class="account-tabs-setting">
+                    <div class="row">
+                        <div class="col-lg-2">
 
-{% endblock content %}
+                        </div>
+                        <div class="col-lg-9">
+
+                            <div class="tab-content" id="nav-tabContent">
+                                <div class="tab-pane fade show active" id="nav-acc" role="tabpanel"
+                                aria-labelledby="nav-acc-tab">
+                                <div class="acc-setting">
+                                    <h3>Update Information</h3>
+                                    <form>
+                                        <div class="cp-field">
+                                            <h5>Name</h5>
+                                            <div class="cpp-fiel">
+                                                <input type="text" name="name" value={{name}}>
+
+                                            </div>
+                                        </div>
+                                        <div class="cp-field">
+                                            <h5>City</h5>
+                                            <div class="cpp-fiel">
+                                                <input type="text" type="text" name="city" value={{city}}>
+
+                                            </div>
+                                        </div>
+                                        <div class="cp-field">
+                                            <h5>Country</h5>
+                                            <div class="cpp-fiel">
+                                                <input type="text" name="country" value={{country}}>
+
+                                            </div>
+                                        </div>
+                                        <div class="cp-field">
+                                            <h5>Email</h5>
+                                            <div class="cpp-fiel">
+                                                <input type="email" name="email" value={{email}} required>
+
+                                            </div>
+                                        </div>
+                                        <div class="cp-field">
+                                            <h5>Blood Group</h5>
+                                            <div class="cpp-fiel">
+                                                <input type="text" name="bloodGroup" value={{bloodGroup}} required>
+
+                                            </div>
+                                        </div>
+                                        <div class="cp-field">
+                                            <h5>Bio</h5>
+                                            <div class="cpp-fiel">
+                                                <input type="text" name="bio" value={{bio}}>
+                                                <i class="fa fa-lock"></i>
+                                            </div>
+                                        </div>
+
+                                        <div class="save-stngs ">
+                                            <ul>
+                                                <li><button type="submit" value="change" name="change">Change</button></li>
+
+                                            </ul>
+                                        </div>
+                                    </form>
+                                    <form method="get" action="{% url 'recharge' %}" >
+                                        <div class="cp-field">
+                                            <h5>Recharge</h5>
+                                            <div class="cpp-fiel">
+                                                <input type="number" min="1" name="rechargeAmount"><br>
+                                            </div>
+                                        </div>
+
+                                        <div class="save-stngs ">
+                                            <br>Current Balance: {{balance}}<br>
+                                            <ul>
+                                                <li><button type="submit" value="recharge" name="change">Recharge</button></li>
+
+                                            </ul>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% endblock content %}
+    </div>
+     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/popper.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.mCustomScrollbar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/slick/slick.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+</body>
+
+
+</html>
