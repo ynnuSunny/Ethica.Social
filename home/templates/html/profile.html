@@ -31,7 +31,7 @@
         <header>
        <section class="cover-sec">
 
-            <img src="{{cover}}" alt="">
+            <img src="{{cover}}" alt="" style=" height: 300px;">
             <div class="add-dp" id="OpenImgUpload">
                 <form method="post" action="{% url 'updateCover' %}" enctype="multipart/form-data">
                     {% csrf_token %}
@@ -40,7 +40,7 @@
                     <input type="submit" name="change"  value="Change">
                 </form>
             </div>
-            </div>
+
         </section>
         </header>
 
@@ -135,55 +135,37 @@
                                             </ul>
                                             <a href="#" title="">Status</a> -->
                                         </div>
-                                        <div class="tab-feed st2 settingjb">
+                                        <div >
                                             <ul>
-                                                <li data-tab="feed-dd" class="active">
-                                                    <a href="#" title="">
-                                                        <img src="images/ic1.png" alt="">
-                                                        <span>Feed</span>
-                                                    </a>
-                                                </li>
-                                                <li data-tab="info-dd">
-                                                    <a href="#" title="">
-                                                        <img src="images/ic2.png" alt="">
-                                                        <span>Recharge</span>
-                                                    </a>
+                                                <li>
+                                                    <div class="message-btn" style="margin: 1px;">
+                                                        <a href="{% url 'showBasicInfo'%}" title=""><i class="fas fa-cog"></i>
+                                                            Setting</a>
+                                                    </div>
                                                 </li>
                                                 <li >
-                                                    <a href="{% url 'activityLog'%}" title="" black = true>
-                                                        <img src="{% static 'images/ic4.png' %}" alt="">
-                                                        <span>Activity</span>
-                                                    </a>
+                                                    <div class="message-btn" style="margin: 1px;">
+                                                        <a href="{% url 'activityLog'%}" title=""><i class="fas fa-cog"></i>
+                                                            Activity</a>
+                                                    </div>
+
                                                 </li>
-<!--                                                <li data-tab="my-bids">-->
-<!--                                                    <a href="#" title="">-->
-<!--                                                        <img src="images/ic5.png" alt="">-->
-<!--                                                        <span>Bids</span>-->
-<!--                                                    </a>-->
-<!--                                                </li>-->
-<!--                                                <li data-tab="portfolio-dd">-->
-<!--                                                    <a href="#" title="">-->
-<!--                                                        <img src="images/ic3.png" alt="">-->
-<!--                                                        <span>Portfolio</span>-->
-<!--                                                    </a>-->
-<!--                                                </li>-->
-<!--                                                <li data-tab="rewivewdata">-->
-<!--                                                    <a href="#" title="">-->
-<!--                                                        <img src="images/review.png" alt="">-->
-<!--                                                        <span>Reviews</span>-->
-<!--                                                    </a>-->
-<!--                                                </li>-->
-<!--                                                <li data-tab="payment-dd">-->
-<!--                                                    <a href="#" title="">-->
-<!--                                                        <img src="images/ic6.png" alt="">-->
-<!--                                                        <span>Payment</span>-->
-<!--                                                    </a>-->
-<!--                                                </li>-->
+                                                <li data-tab="info-dd">
+                                                    <div class="message-btn" style="margin: 1px;">
+                                                        <a href="{% url 'createPost'%}" title=""><i class="fas fa-cog"></i>
+                                                            Create Post</a>
+                                                    </div>
+                                                </li>
+
+
                                             </ul>
                                         </div>
+                                        <br>
+                                        <br>
                                     </div>
-
+                                     <br>
                                     <div class="product-feed-tab current" id="feed-dd">
+                                        <br>
                                         {% for x in posts %}
                                         <div class="posts-section">
 
@@ -299,50 +281,20 @@
                                 </div>
                             </div>
                             <div class="col-lg-3">
-                                <div class="right-sidebar">
-                                    <div class="message-btn">
-                                        <a href="{% url 'showBasicInfo'%}" title=""><i class="fas fa-cog"></i>
-                                            Setting</a>
-                                    </div>
-                                    <div class="message-btn">
-                                        <a href="{% url 'createPost'%}" title=""><i class="fas fa-cog"></i>
-                                            Create Post</a>
-                                    </div>
-                                    <div class="widget widget-portfolio">
-<!--                                        <div class="wd-heady">-->
-<!--                                            <h3>Portfolio</h3>-->
-<!--                                            <img src="images/photo-icon.png" alt="">-->
-<!--                                        </div>-->
-<!--                                        <div class="pf-gallery">-->
-<!--                                            <ul>-->
-<!--                                                <li><a href="#" title=""><img src="images/resources/pf-gallery1.png"-->
-<!--                                                            alt=""></a></li>-->
-<!--                                                <li><a href="#" title=""><img src="images/resources/pf-gallery2.png"-->
-<!--                                                            alt=""></a></li>-->
-<!--                                                <li><a href="#" title=""><img src="images/resources/pf-gallery3.png"-->
-<!--                                                            alt=""></a></li>-->
-<!--                                                <li><a href="#" title=""><img src="images/resources/pf-gallery4.png"-->
-<!--                                                            alt=""></a></li>-->
-<!--                                                <li><a href="#" title=""><img src="images/resources/pf-gallery5.png"-->
-<!--                                                            alt=""></a></li>-->
-<!--                                                <li><a href="#" title=""><img src="images/resources/pf-gallery6.png"-->
-<!--                                                            alt=""></a></li>-->
-<!--                                                <li><a href="#" title=""><img src="images/resources/pf-gallery7.png"-->
-<!--                                                            alt=""></a></li>-->
-<!--                                                <li><a href="#" title=""><img src="images/resources/pf-gallery8.png"-->
-<!--                                                            alt=""></a></li>-->
-<!--                                                <li><a href="#" title=""><img src="images/resources/pf-gallery9.png"-->
-<!--                                                            alt=""></a></li>-->
-<!--                                                <li><a href="#" title=""><img src="images/resources/pf-gallery10.png"-->
-<!--                                                            alt=""></a></li>-->
-<!--                                                <li><a href="#" title=""><img src="images/resources/pf-gallery11.png"-->
-<!--                                                            alt=""></a></li>-->
-<!--                                                <li><a href="#" title=""><img src="images/resources/pf-gallery12.png"-->
-<!--                                                            alt=""></a></li>-->
-<!--                                            </ul>-->
-<!--                                        </div>-->
-                                    </div>
-                                </div>
+<!--                                <div class="right-sidebar">-->
+<!--                                    <div class="message-btn">-->
+<!--                                        <a href="{% url 'showBasicInfo'%}" title=""><i class="fas fa-cog"></i>-->
+<!--                                            Setting</a>-->
+<!--                                    </div>-->
+
+<!--                                    <div class="message-btn" style="margin: 10px;">-->
+<!--                                        <a href="{% url 'createPost'%}" title=""><i class="fas fa-cog"></i>-->
+<!--                                            Create Post</a>-->
+<!--                                    </div>-->
+<!--                                    <div class="widget widget-portfolio">-->
+
+<!--                                    </div>-->
+<!--                                </div>-->
                             </div>
                         </div>
                     </div>
