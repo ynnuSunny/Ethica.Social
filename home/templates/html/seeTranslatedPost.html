@@ -1,26 +1,134 @@
 {% extends 'html/base.html' %}
-{% block content %}
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<!-- Mirrored from gambolthemes.net/workwise-new/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 22 Aug 2022 09:36:01 GMT -->
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>WorkWise Html Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/line-awesome.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/line-awesome-font-awesome.min.css' %}">
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.mCustomScrollbar.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/slick/slick.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/slick/slick-theme.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}">
+</head>
+
+<body>
+    <div class="wrapper">
+        {% block content %}
+        <main>
+            <div class="main-section">
+                <div class="container">
+                    <div class="main-section-data">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-4 pd-left-none no-pd">
+
+                            </div>
+                            <div class="col-lg-6 col-md-8 no-pd">
+                                <div class="main-ws-sec">
 
 
-audience:{{ viewers }}<br> posted on : {{date}}<br>
-        post:{{ content }}<br>
-        translate:{{translatedContent}}<br>
-        reaction: {{ likes }}<br>
-        {% if photo is not none%}
-          
-          <img src= "{{photo}}"> <br>
-          {% endif %}
-          
-        comment:<br>
-        
-        {% for c in comment %}
-          <a href="{% url 'othersProfile' %}?nid={{c.commenterNid}}">{{c.commenterName}}</a>
-          
-          {{c.comment}}
-          <br> 
-          {% endfor %}
-          
-           
-     
+                                        <div class="posts-section">
 
-{% endblock content %}
+
+                                            <div class="post-bar">
+                                                <div class="post_topbar">
+                                                    <div class="usy-dt" >
+                                                        <img src="{{dp}}" alt="" style="border-radius: 50%;width: 50px;">
+                                                        <div class="usy-name">
+                                                            <h3>{{name}}</h3>
+                                                            <span><img src="{%static 'images/clock.png' %}" alt="">posted on : {{date}}</span>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="epi-sec">
+                                                    <ul class="descp">
+                                                        <li><img src="images/icon8.png" alt=""><span>audience:{{ viewers }}</span>
+                                                        </li>
+
+                                                    </ul>
+                                                    <ul class="bk-links">
+                                                        <li><a href="{% url 'seeTranslated' %}?postId={{x.postNo}}" title=""><i class="la la-bookmark"></i></a></li>
+
+                                                    </ul>
+                                                </div>
+                                                <div class="job_descp">
+
+                                                    <p>{{ content }}</p>
+                                                    <br>
+                                                    Bangle : {{translatedContent}}
+
+                                                    {% if photo is not none%}
+                                                        <img src= "{{photo}}"> <br>
+                                                    {% endif %}
+
+                                                </div>
+                                                 <a href="{% url 'viewReactions' %}?postid={{postNo}}">reactions: {{ likes }}</a><br>
+                                                <div class="job-status-bar">
+                                                    <ul class="like-com">
+                                                        {% for re in reactTypes %}
+
+
+                                                        <li>
+                                                            <form method="get" action="{% url 'meReact' %}">
+                                                                <input type = "hidden" name="postid" value={{x.postNo}}>
+                                                                <input type = "hidden" name="reactName" value={{re}}>
+                                                                <input type = "hidden" name="reactorNid" value={{x.seeingNid}}>
+                                                                <input type = "submit" value="{{re}}" name="reactBtn">
+                                                              </form>
+                                                        </li>
+                                                        {% endfor %}
+                                                    </ul>
+                                                    <!-- <a href="#"><i class="fas fa-eye"></i>Views 50</a> -->
+                                                </div>
+
+                                                comment:<br>
+                                                        {% for c in comment %}
+                                                            <a href="{% url 'othersProfile' %}?nid={{c.commenterNid}}">{{c.commenterName}}</a>
+
+                                                            {{c.comment}}
+                                                            <br>
+
+                                                        {% endfor %}
+
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        {% endblock content %}
+
+    </div>
+     <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/popper.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.mCustomScrollbar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/slick/slick.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+</body>
+
+<!-- Mirrored from gambolthemes.net/workwise-new/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 22 Aug 2022 09:36:39 GMT -->
+
+</html>
