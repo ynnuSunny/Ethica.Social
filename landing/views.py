@@ -209,6 +209,8 @@ def createAccountDb(request):
             "reactions": [],
             "interest": [],
             "dp": "nodp.jpg",
+            "cover":"noCover.jpeg",
+            "viewedMyPorfile":[]
 
         }
         request.session['nid'] = nid

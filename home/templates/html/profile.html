@@ -31,16 +31,15 @@
         <header>
        <section class="cover-sec">
 
-            <img src="{% static 'images/resources/cover-img.jpg' %}" alt="">
-            <div class="add-pic-box">
-                <div class="container">
-                    <div class="row no-gutters">
-                        <div class="col-lg-12 col-sm-12">
-                            <input type="file" id="file">
-                            <label for="file">Change Image</label>
-                        </div>
-                    </div>
-                </div>
+            <img src="{{cover}}" alt="">
+            <div class="add-dp" id="OpenImgUpload">
+                <form method="post" action="{% url 'updateCover' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <input type="file" name="cover" id = "tempIm">
+                    <label for="tempIm"><i class="fas fa-camera"></i></label>
+                    <input type="submit" name="change"  value="Change">
+                </form>
+            </div>
             </div>
         </section>
         </header>
@@ -109,56 +108,14 @@
                                         </div>
                                         <div class="suggestions-list">
                                             <div class="suggestion-usd">
-                                                <img src="images/resources/s1.png" alt="">
-                                                <div class="sgt-text">
-                                                    <h4>Jessica William</h4>
-                                                    <span>Graphic Designer</span>
+                                                {% for i in viewedMyProfile%}
+                                                <div class="suggestion-usd">
+                                                    <a href="{% url 'othersProfile' %}?nid={{i.viewerNid}}">{{i.viewerName}}</a>
+                                                    <span><i class="la la-plus"></i></span>
                                                 </div>
-                                                <span><i class="la la-plus"></i></span>
+                                                {% endfor %}
                                             </div>
-                                            <div class="suggestion-usd">
-                                                <img src="images/resources/s2.png" alt="">
-                                                <div class="sgt-text">
-                                                    <h4>John Doe</h4>
-                                                    <span>PHP Developer</span>
-                                                </div>
-                                                <span><i class="la la-plus"></i></span>
-                                            </div>
-                                            <div class="suggestion-usd">
-                                                <img src="images/resources/s3.png" alt="">
-                                                <div class="sgt-text">
-                                                    <h4>Poonam</h4>
-                                                    <span>Wordpress Developer</span>
-                                                </div>
-                                                <span><i class="la la-plus"></i></span>
-                                            </div>
-                                            <div class="suggestion-usd">
-                                                <img src="images/resources/s4.png" alt="">
-                                                <div class="sgt-text">
-                                                    <h4>Bill Gates</h4>
-                                                    <span>C & C++ Developer</span>
-                                                </div>
-                                                <span><i class="la la-plus"></i></span>
-                                            </div>
-                                            <div class="suggestion-usd">
-                                                <img src="images/resources/s5.png" alt="">
-                                                <div class="sgt-text">
-                                                    <h4>Jessica William</h4>
-                                                    <span>Graphic Designer</span>
-                                                </div>
-                                                <span><i class="la la-plus"></i></span>
-                                            </div>
-                                            <div class="suggestion-usd">
-                                                <img src="images/resources/s6.png" alt="">
-                                                <div class="sgt-text">
-                                                    <h4>John Doe</h4>
-                                                    <span>PHP Developer</span>
-                                                </div>
-                                                <span><i class="la la-plus"></i></span>
-                                            </div>
-                                            <div class="view-more">
-                                                <a href="#" title="">View More</a>
-                                            </div>
+                                            
                                         </div>
                                     </div>
                                 </div>

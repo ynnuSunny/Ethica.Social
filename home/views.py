@@ -18,6 +18,10 @@ from sympy import content
 from bson.objectid import ObjectId
 from googletrans import Translator
 from django.core.files.storage import FileSystemStorage
+import spacy
+import nltk
+nltk.download("stopwords")
+from nltk.corpus import stopwords
 
 
 class DBConnect:
@@ -148,6 +152,20 @@ def getAllComment(post):
             "comment":i[1]})
     return allComment
 
+def getSimillarity(interest,tags):
+    sw = stopwords.words('english')
+    nlp = spacy.load('en_core_web_sm')
+    interest= [ w for w in interest if w not in stopwords.words('english')]
+    tags = [ w for w in tags if w not in stopwords.words('english')]
+    
+    build = " ".join(interest)
+    s2= " ".join(tags)
+    doc1 = nlp(build)
+    doc2 = nlp(s2)
+
+
+    return doc1.similarity(doc2)
+
 def notification(request):
     nid=request.session['nid']
 
@@ -175,9 +193,86 @@ def activityLog(request):
     
     return render(request, 'html/activityLog.html',activity)
 
+
+def showOnePost(request):
+    try:
+        nid=request.session['nid']
+        usr=getUsr(nid)
+        usr['todayPostView']+=1
+        global showPost
+        global postNo
+        global maxReached
+        
+        if(usr['todayPostView']>=usr['maxPostView']):
+            updateUsr(usr)    
+            return render(request, 'html/showOnePost.html',{"msg":"you have reached maximum view limit"})
+
+        if(postNo==len(showPost)):
+            postNo=0
+        updateUsr(usr)
+        db=DBConnect.getInstance()
+        collection=db["post"]
+        allPost=[]
+        p=collection.find_one({"_id":ObjectId(showPost[postNo][1])})
+        allPost.append(p)
+        postNo+=1
+        postShowAll=[]
+        allPosts=[]
+        collection=db["user"]
+        fs= FileSystemStorage()
+        for i in allPost:
+            comments=getAllComment(i)
+            posterNid=i["nid"]
+            usr=collection.find_one({"nid":posterNid})
+            postShow={
+                "posterName":usr['name'],
+                "dp":fs.url(usr['dp']),
+                "posterNid":i["nid"],
+                "postNo":i["_id"],
+                "content": i['content'],
+                "likes":len(i["reactors"]),
+                "comment":comments,
+                "viewers":i["audience"],
+                "type":i["type"],
+                "date":i['date'],
+                "reactTypes":list(i["reactionCount"].keys()),
+                "photo":None,
+                "nid":i['nid'],
+                "seeingNid":nid,
+                }
+            
+            if(i['photo']):
+                postShow['photo']=fs.url(i['photo'])
+            allPosts.append(postShow)
+            
+        return render(request, 'html/showOnePost.html',{"posts":allPosts})
+
+    except:
+        return redirect(newsFeed)
+
 def newsFeed(request):
     nid=request.session['nid']
-    return render(request, 'html/newsFeed.html')
+    usr=getUsr(nid)
+    db=DBConnect.getInstance()
+    collection=db["post"]
+    global maxReached
+    
+
+    allPosts= collection.find({})
+    global showPost
+    showPost=[]
+    global postNo
+    
+    postNo=0
+    for i in allPosts:
+        if(i['nid']==nid):
+            continue
+
+        match= getSimillarity(usr['interest'], i['tags'])
+        showPost.append([match,i['_id']])
+    showPost.sort()
+
+    return redirect(showOnePost)
 
 
 def toggleCellData(request):
@@ -203,9 +298,11 @@ def buyReaction(request):
     global cannotBuyReaction
     if(usr['balance']<reactionPrice):
         cannotBuyReaction=True
+        return redirect(settings)
 
 
     reaction=request.GET['buyReaction']
+    usr['balance']-=reactionPrice
     usr['reactions'].append(reaction)
     updateUsr(usr)
     return redirect(settings)
@@ -360,6 +457,8 @@ def meReact(request):
     return redirect(request.META.get('HTTP_REFERER'))
     
 
+
+
 def profilePage(request):
     nid=request.session['nid']
     db=DBConnect.getInstance()
@@ -367,7 +466,25 @@ def profilePage(request):
     usr=collection.find_one({"nid":nid})
     fs=FileSystemStorage()
     # dp=getImg(nid)
+    profileViewers=usr['viewedMyPorfile']
+    if(len(profileViewers)>5):
+        profileViewers=profileViewers[-5:]
+    if(len(profileViewers)==0):
+        profileViewers.append(nid)
+    
+    profileViewers= set(profileViewers)
+    profileViewers = list(profileViewers)
+    profileViewInfo=[]
+    for i in profileViewers:
+        u= getUsr(i)
+        profileViewInfo.append({
+            'viewerNid':i,
+            "viewerName":u['name']
+        })
+
     userInfo={
+        "viewedMyProfile":profileViewInfo,
+        'cover':fs.url(usr['cover']),
         "dp":fs.url(usr['dp']),
         "name":usr["name"],
         "bio":usr['bio'],
@@ -418,6 +535,18 @@ def updateDp(request):
     except:
         pass
     return redirect(profilePage)
+def updateCover(request):
+    nid=request.session['nid']
+    usr=getUsr(nid)
+    try:
+        uploaded_file = request.FILES["cover"]
+        fs = FileSystemStorage()   
+        photo_name=fs.save(uploaded_file.name, uploaded_file)
+        usr['cover']=photo_name
+        updateUsr(usr)
+    except:
+        pass
+    return redirect(profilePage)
 
 def createPost(request):
     nid=request.session['nid']
@@ -429,29 +558,32 @@ def createPost(request):
 
     return render(request, 'html/createPost.html',usrData)
 
+
 def makeOtherComment(request):
-    ownerOfPost=request.GET['nid']
-    commenter=request.GET['commenter']
-    postid=request.GET['postid']
-    comment=request.GET['comment']
-    if(len(comment)==0):
+    ownerOfPost = request.GET['nid']
+    commenter = request.GET['commenter']
+    postid = request.GET['postid']
+    comment = request.GET['comment']
+
+    if (commenter == '' or ownerOfPost == '' or postid == '' or len(comment) == 0):
         redirect(request.META.get('HTTP_REFERER'))
-    
-    db=DBConnect.getInstance()
-    collection=db["post"]
-    postData=collection.find_one({"_id":ObjectId(postid)})
-    allComments=postData["comment"]
-    allComments.append([commenter,comment])
-    postData["comment"]=allComments
-    collection.delete_one({"_id":ObjectId(postid)})
+
+    db = DBConnect.getInstance()
+    collection = db["post"]
+    postData = collection.find_one({"_id": ObjectId(postid)})
+    allComments = postData["comment"]
+    allComments.append([commenter, comment])
+    postData["comment"] = allComments
+    collection.delete_one({"_id": ObjectId(postid)})
     collection.insert_one(postData)
-    own=getUsr(postData['nid'])
-    commenterData=getUsr(commenter)
-    notificationTxt= postData['content']
-    if(len(notificationTxt)>10):
-        notificationTxt= postData['content'][:10]
-    addActivity(commenter, "made a comment \""+comment+"\" on "+own['name']+"'s post at "+str(datetime.datetime.now()))
-    addNotification(own['nid'],commenterData['name']+" made a comment on your post " + notificationTxt+"...")
+    own = getUsr(postData['nid'])
+    commenterData = getUsr(commenter)
+    notificationTxt = postData['content']
+    if (len(notificationTxt) > 10):
+        notificationTxt = postData['content'][:10]
+    addActivity(commenter,
+                "made a comment \"" + comment + "\" on " + own['name'] + "'s post at " + str(datetime.datetime.now()))
+    addNotification(own['nid'], commenterData['name'] + " made a comment on your post " + notificationTxt + "...")
     commenterData["interest"].extend(postData['tags'])
     updateUsr(commenterData)
     return redirect(request.META.get('HTTP_REFERER'))
@@ -639,17 +771,9 @@ def createPostHandle(request):
         pass
     
     react=None
-    try:
-        react=request.POST['hideReaction']
-    except:
-        pass
+    
     price=0
-    try:
-        price=int(request.POST['price'])
-        if(price<0):
-            price=0
-    except:
-        pass
+    
     
     
     
@@ -779,12 +903,15 @@ def othersProfile(request,nid=None):
     mynid=request.session['nid']
     if(mynid==nid):
         return redirect("profile")
+    
     fs=FileSystemStorage()
     # USER
     db=DBConnect.getInstance()
     collection=db["user"]
     usr=collection.find_one({"nid":nid})
     me=collection.find_one({"nid":mynid})
+    usr['viewedMyPorfile'].append(mynid)
+    updateUsr(usr)
     #posts
     collection=db["post"]
     posts=collection.find({"nid":nid})
@@ -830,6 +957,9 @@ def othersProfile(request,nid=None):
         "followBtn":followBtn,
         "isFollowing":isFollowing,
         "dp":fs.url(usr['dp']),
+        'cover':fs.url(usr['cover']),
+        'followers':len(usr['followers']),
+        'followings':len(usr['followings']),
     }
     global noAmountToDonate
     if(noAmountToDonate):
@@ -889,16 +1019,15 @@ def news(request):
     return HttpResponse("this is news")
 def followersPost(request):
     nid=request.session['nid']
+    usr=getUsr(nid)
     db=DBConnect.getInstance()
-    collection=db["user"]
-    usr=collection.find_one({"nid":nid})
     collection=db["post"]
-    allPost=collection.find()
+    allPost= collection.find({})
     allPosts=[]
     collection=db["user"]
     fs= FileSystemStorage()
     for i in allPost:
-        if((i["nid"]in usr['followings'] or i["nid"]in usr['followers']  ) and (i["audience"]!="onlyme")):
+        if((i["nid"]in usr['followings']) and (i["audience"]!="onlyme") and i['nid']!=nid):
             comments=getAllComment(i)
             posterNid=i["nid"]
             usr=collection.find_one({"nid":posterNid})
@@ -914,6 +1043,7 @@ def followersPost(request):
                 "date":i['date'],
                 "reactTypes":list(i["reactionCount"].keys()),
                 "photo":None,
+                "dp":fs.url(usr['dp'])
                 }
             
             if(i['photo']):
@@ -1036,3 +1166,6 @@ def search(request):
 noAmountToDonate=False
 noAmountToBuyData=False
 cannotBuyReaction=False
+showPost=[]
+postNo=0
+maxReached= False

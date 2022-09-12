@@ -30,7 +30,7 @@
     <div class="wrapper">
         {% block content %}
         <section class="cover-sec">
-            <img src="{% static 'images/resources/cover-img.jpg' %}" alt="">
+            <img src="{{cover}}" alt="">
         </section>
         <main>
             <div class="main-section">
@@ -56,16 +56,16 @@
                                                               <input type="submit" name="follow" value={{followBtn}}>
                                                           </form>
                                                     </li>
-                                                <li><a href="#" title="" class="hre">Hire</a></li>
+                                                
                                             </ul>
                                             <ul class="flw-status">
                                                 <li>
                                                     <span>Following</span>
-                                                    <b>34</b>
+                                                    <b>{{followings}}</b>
                                                 </li>
                                                 <li>
                                                     <span>Followers</span>
-                                                    <b>155</b>
+                                                    <b>{{followers}}</b>
                                                 </li>
                                             </ul>
                                         </div>
@@ -81,11 +81,11 @@
                                         <div class="star-descp">
                                             <span>{{bio}}</span>
                                             <ul>
+                                                <!-- <li><i class="fa fa-star"></i></li>
                                                 <li><i class="fa fa-star"></i></li>
                                                 <li><i class="fa fa-star"></i></li>
                                                 <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star"></i></li>
-                                                <li><i class="fa fa-star-half-o"></i></li>
+                                                <li><i class="fa fa-star-half-o"></i></li> -->
                                             </ul>
                                         </div>
                                         <div class="tab-feed">

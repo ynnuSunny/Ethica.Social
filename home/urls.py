@@ -40,7 +40,9 @@ urlpatterns = [
     path('viewReactions/<postid>/', views.viewReactions,name="viewReactions"),
     path('viewReactions/', views.viewReactions,name="viewReactions"),
     path('updateDp/', views.updateDp,name="updateDp"),
+    path('updateCover/', views.updateCover,name="updateCover"),
     path('updateUsrMaxPostView/', views.updateUsrMaxPostView,name="updateUsrMaxPostView"),  
     path('meReact/<reactorNid>/', views.meReact,name="meReact"),  
     path('meReact/', views.meReact,name="meReact"),  
+    path('showOnePost/', views.showOnePost,name="showOnePost"),  
 ]
