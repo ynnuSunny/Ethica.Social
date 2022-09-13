@@ -16,16 +16,20 @@
     <div class="wrapper">
       <section class="post">
         <header>Create Post</header>
-        {% if msg is not none %}
+          {% if msg is not none %}
 
-              {{msg}}
-         {% endif %}
+            <script>
+
+              alert("{{msg}}");
+
+            </script>
+            {% endif %}
         <form method="post" action="{% url 'createPostHandle' %}" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="content">
-            <img src="cwn.png" alt="logo">
+            <img src="{{dp}}" alt="logo">
             <div class="details">
-              <p>Poster Name</p>
+              <p>{{name}}</p>
               <select name="audience">
                 <option value="public">public</option>
                 <option value="followers">followers</option>
@@ -33,7 +37,7 @@
               </select>
             </div>
           </div>
-          <textarea name="postcontent" placeholder="What's on your mind, CodeWithNepal?" spellcheck="false" required></textarea>
+          <textarea name="postcontent" placeholder="What's on your mind, ....." spellcheck="false" required></textarea>
           <div class="theme-emoji">
 
             <input type="file" name="photo">

@@ -174,7 +174,8 @@ def notification(request):
 
     usr=collection.find_one({"nid":nid})
     activity={
-        "usrActivity":usr['notification']
+        "usrActivity":usr['notification'],
+        "name":"Notification"
         }
     return render(request, 'html/activityLog.html',activity)
     
@@ -188,7 +189,8 @@ def activityLog(request):
 
     usr=collection.find_one({"nid":nid})
     activity={
-        "usrActivity":usr['activityLog']
+        "usrActivity":usr['activityLog'],
+        "name":"Activity Log"
         }
     
     return render(request, 'html/activityLog.html',activity)
@@ -198,18 +200,20 @@ def showOnePost(request):
     try:
         nid=request.session['nid']
         usr=getUsr(nid)
-        usr['todayPostView']+=1
+        tpv=usr['todayPostView']+1
+        usr['todayPostView']=tpv
+        updateUsr(usr)
         global showPost
         global postNo
         global maxReached
         
         if(usr['todayPostView']>=usr['maxPostView']):
-            updateUsr(usr)    
-            return render(request, 'html/showOnePost.html',{"msg":"you have reached maximum view limit"})
+
+            return render(request, 'html/showOnePost.html',{"msg":"you have reached maximum view limit","totalPostSee":tpv})
 
         if(postNo==len(showPost)):
             postNo=0
-        updateUsr(usr)
+
         db=DBConnect.getInstance()
         collection=db["post"]
         allPost=[]
@@ -239,13 +243,15 @@ def showOnePost(request):
                 "photo":None,
                 "nid":i['nid'],
                 "seeingNid":nid,
+
                 }
             
             if(i['photo']):
                 postShow['photo']=fs.url(i['photo'])
             allPosts.append(postShow)
-            
-        return render(request, 'html/showOnePost.html',{"posts":allPosts})
+
+
+        return render(request, 'html/showOnePost.html',{"posts":allPosts,"totalPostSee":tpv})
 
     except:
         return redirect(newsFeed)
@@ -552,9 +558,14 @@ def createPost(request):
     nid=request.session['nid']
     
     usr=getUsr(nid)
+    fs = FileSystemStorage()
     usrData={
-        "reactions":usr['reactions']
+        "reactions":usr['reactions'],
+        "name":usr['name'],
+        'dp':None
     }
+    if(usr['dp']):
+        usrData['dp']=fs.url(usr["dp"])
 
     return render(request, 'html/createPost.html',usrData)
 
@@ -765,7 +776,7 @@ def createPostHandle(request):
     
     try:
         uploaded_file = request.FILES["photo"]
-        fs = FileSystemStorage()   
+        fs = FileSystemStorage()
         photo_name=fs.save(uploaded_file.name, uploaded_file)
     except:
         pass
@@ -855,7 +866,7 @@ def followers(request):
     db=DBConnect.getInstance()
     collection=db["user"]
     usr=collection.find_one({"nid":nid})
-
+    fs=FileSystemStorage()
     followerShow=[]
     for i in usr['followers']:
         follower=collection.find_one({"nid":i})
@@ -864,9 +875,12 @@ def followers(request):
             "nid":i,
             "name":follower['name'],
             "city":follower['location']['city'],
-            "country":follower['location']['country']
+            "country":follower['location']['country'],
+            "dp":None
             }
             )
+        if (follower['dp']):
+            followerShow[-1]['dp'] = fs.url(follower['dp'])
 
     followersInfo={
         "allFollowers":followerShow,
@@ -878,7 +892,7 @@ def followings(request):
     db=DBConnect.getInstance()
     collection=db["user"]
     usr=collection.find_one({"nid":nid})
-
+    fs = FileSystemStorage()
     followerShow=[]
     for i in usr['followings']:
         follower=collection.find_one({"nid":i})
@@ -887,9 +901,12 @@ def followings(request):
             "nid":i,
             "name":follower['name'],
             "city":follower['location']['city'],
-            "country":follower['location']['country']
+            "country":follower['location']['country'],
+            "dp":None
             }
             )
+        if(follower['dp']):
+            followerShow[-1]['dp']=fs.url(follower['dp'])
 
     followersInfo={
         "allFollowers":followerShow,

@@ -44,11 +44,14 @@
                                 {% block content %}
                                 <div class="sign_in_sec current" id="tab-2">
                                     <h3>Create Account</h3>
-                                    {% if msg is not none %}
+                                      {% if msg is not none %}
 
-                                               {{msg}}
+                                            <script>
 
-                                    {% endif %}
+                                              alert("{{msg}}");
+
+                                            </script>
+                                            {% endif %}
                                     <!-- <div class="signup-tab">
                                         <i class="fa fa-long-arrow-left"></i>
                                         <h2><a href="https://gambolthemes.net/cdn-cgi/l/email-protection"

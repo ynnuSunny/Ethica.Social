@@ -44,12 +44,14 @@
                                 <div class="sign_in_sec current" id="tab-1">
                                     {% block content %}
                                     <h3>Sign in</h3>
-                                    {% if msg is not none %}
+                                      {% if msg is not none %}
 
-                                            {{msg}}
+                                        <script>
 
+                                          alert("{{msg}}");
 
-                                    {% endif %}
+                                        </script>
+                                        {% endif %}
                                     <form method="post" action="{% url 'validateLogin' %}">
                                         {% csrf_token %}
                                         <div class="row">

@@ -1,11 +1,14 @@
 {% extends 'html/base.html' %}
 {% block content %}
 
-{% if msg is not none %}
+  {% if msg is not none %}
 
-    {{msg}}
+            <script>
 
-{% endif %}
+              alert("{{msg}}");
+
+            </script>
+            {% endif %}
 
 <form method="get" action="{% url 'buyDataHandle'%}" >
 

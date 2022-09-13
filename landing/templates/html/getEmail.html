@@ -31,10 +31,14 @@
                             <p>You can reset your password here.</p>
                             <div class="panel-body">
                                 {% block content %}
-                                {% if msg is not none %}
-                                
-                                    {{msg}}
-                                {% endif %}
+                                  {% if msg is not none %}
+
+                                    <script>
+
+                                      alert("{{msg}}");
+
+                                    </script>
+                                    {% endif %}
                                 <form id="register-form"  class="form" method="get" action="{% url 'getEmail' %}">
 
                                     <div class="form-group">

@@ -33,6 +33,15 @@
             <img src="{{cover}}" alt="" style=" height: 300px;">
         </section>
         <main>
+            {% if msg is not none %}
+
+            <script>
+
+              alert("{{msg}}");
+
+            </script>
+            {% endif %}
+
             <div class="main-section">
                 <div class="container">
                     <div class="main-section-data">
@@ -56,6 +65,16 @@
                                                               <input type="submit" name="follow" value={{followBtn}}>
                                                           </form>
                                                     </li>
+                                                <li class="flww" class="la la-plus">
+
+
+                                                    <form method="get" action="{% url 'tip' %}">
+                                                        <input type = "hidden" name="reciever" value={{nid}}>
+                                                        <input type = "hidden" name="viewer" value={{seeingNid}}>
+                                                        <input type="number" min="1" placeholder="tip amount" name="tipamount">
+                                                        <input type="submit" name="tip" value="tip">
+                                                    </form>
+                                                </li>
                                                 
                                             </ul>
                                             <ul class="flw-status">

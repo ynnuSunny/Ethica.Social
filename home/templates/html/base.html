@@ -99,48 +99,52 @@
                     </div>
                     <div class="user-account">
                         <div class="user-info">
-                            <img src="{% static 'images/resources/user.png' %}" alt="">
-                            <a href="#" title="">John</a>
+
+                            <a href="#" title="">Account</a>
                             <i class="la la-sort-down"></i>
                         </div>
                         <div class="user-account-settingss">
-                            <h3>Online Status</h3>
+                            <h3>About Data</h3>
                             <ul class="on-off-status">
                                 <li>
                                     <div class="fgt-sec">
-                                        <input type="radio" name="cc" id="c5">
-                                        <label for="c5">
-                                            <span></span>
-                                        </label>
-                                        <small>Online</small>
+                                       <form method="get" action="{%  url 'toggleCellData' %} ">
+                                            <input type="submit"  name="sellDataToggle" value="{{toggle}}  celling data">
+                                        </form>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="fgt-sec">
-                                        <input type="radio" name="cc" id="c6">
-                                        <label for="c6">
-                                            <span></span>
-                                        </label>
-                                        <small>Offline</small>
+                                        <a href="{% url 'buyData' %}" > buy Data</a>
                                     </div>
                                 </li>
                             </ul>
-                            <h3>Custom Status</h3>
+                            <h3>Set Post View Limit</h3>
                             <div class="search_form">
-                                <form>
-                                    <input type="text" name="search">
-                                    <button type="submit">Ok</button>
+                                <form method ='get' action="{% url 'updateUsrMaxPostView' %}">
+                                    <input type="number" min="1" placeholder="maximum post view limit" name="maxPostLimit">
+                                    <input type = "submit" value="set" name="set">
                                 </form>
                             </div>
-                            <h3>Setting</h3>
+                            <h3>Buy Reaction</h3>
                             <ul class="us-links">
 
-                                <li><a href="{% url 'settings'%}" title="">Account Setting</a></li>
-                                <li><a href="#" title="">Privacy</a></li>
-                                <li><a href="#" title="">Faqs</a></li>
-                                <li><a href="#" title="">Terms & Conditions</a></li>
+
+                                {% for i in reactionBuy %}
+                                 <form method="get" action="{%  url 'buyReaction' %} ">
+                                    <li><a><input type="submit"  name="buyReaction" value="{{i}}"></a><li>
+                                </form>
+                                {% endfor %}
                             </ul>
-                            <h3 class="tc"><a href="sign-in.html" title="">Logout</a></h3>
+
+                            <div class="message-btn" style="margin: 10px;">
+                               <form  method ="get" action="{% url 'logout' %}">
+                                   <a><input  type="submit" name="logout" value="Logout" style="background-color: #E44D3A;border: none;"></a>
+
+                               </form>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>

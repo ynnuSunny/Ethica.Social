@@ -48,6 +48,14 @@
                                             </ul>
                                         </div>
                                     </div>
+                                      {% if msg is not none %}
+
+                                        <script>
+
+                                          alert("{{msg}}");
+
+                                        </script>
+                                        {% endif %}
                                     {% for x in posts %}
                                         <div class="posts-section">
 
@@ -120,7 +128,7 @@
 
                                             </div>
                                               {% endif %}
-                                            {% endfor %}
+
                                             <a lass="post-jb active" href="{% url 'showOnePost' %}">Next</a>
 
                                             <div class="process-comm">
@@ -131,21 +139,26 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                             <div class="col-lg-3 pd-right-none no-pd">
                                 <div class="right-sidebar">
                                     <div class="widget widget-about">
                                         <img src="images/wd-logo.png" alt="">
-                                        <h3>Track Time on Workwise</h3>
-                                        <span>Pay only for the Hours worked</span>
+                                        <h3>Track Post view on Ethica</h3>
+                                        <span>{{ totalPostSee }}</span>
                                         <div class="sign_link">
-                                            <h3><a href="sign-in.html" title="">Sign up</a></h3>
+<!--                                            <form  method ="get" action="{% url 'logout' %}">-->
+<!--                                                    <a><input  type="submit" name="logout" value="Logout" style="background-color: #E44D3A;border: none;"></a>-->
+
+<!--                                            </form>-->
+                                            <h3><a href="{% url 'logout' %}" title="">Logout</a></h3>
                                             <a href="#" title="">Learn More</a>
                                         </div>
                                     </div>
                                     
-                                    
+
                                 </div>
                             </div>
                         </div>

@@ -1,13 +1,15 @@
 {% extends 'html/base.html' %}
 {% block content %}
+  {% if msg is not none %}
 
-{% if msg is not none %}
+            <script>
 
-    {{msg}}
+              alert("{{msg}}");
 
-{% endif %}
+            </script>
+            {% endif %}
 <form method ="get" action="{% url 'logout' %}">
-    <input type="submit" name="logout" value="log out">
+    <input type="submit" name="logout" value="log out" style="background: #E44D3A;border: none;">
 </form>
 <a href="{% url 'buyData' %}" > buy Data</a>
 <form method="get" action="{%  url 'toggleCellData' %} ">
