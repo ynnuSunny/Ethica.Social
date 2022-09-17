@@ -1021,9 +1021,94 @@ def tip(request):
     
 
 
-
+def addAll(arr,c):
+    for i in c:
+        arr.insert(i)
 def message(request):
-    return HttpResponse("this is message")
+    nid=request.session['nid']
+    usr= getUsr(nid)
+    db = DBConnect.getInstance()
+    collection = db["message"]
+    people=usr['followings'].copy()
+    # people.extend(usr['followers'])
+    friends={
+        "friend":[],
+    }
+    fs= FileSystemStorage()
+
+    for i in people:
+        u=getUsr(i)
+        p={
+        "name":u['name'],
+        "nid":u['nid'],
+        "dp":fs.url(u["dp"])
+        }
+        friends['friend'].append(p)
+
+        # msgs=set([])
+        # conversations=collection.find({"from":nid})
+        # addAll(msgs,conversations)
+        # conversations = collection.find({"to": i})
+        # addAll(msgs, conversations)
+
+
+    return render(request,"html/allMessage.html",{"follow":friends})
+def messageOneToOne(request):
+    nid=request.session['nid']
+    usrNid=request.GET['nid']
+    me=getUsr(nid)
+    other=getUsr(usrNid)
+    message={}
+    fs = FileSystemStorage()
+    myData={
+        "name":me['name'],
+        "nid":me['nid'],
+        'dp':fs.url(me['dp']),
+    }
+
+    message['myInfo']=myData
+    message['otherInfo']={
+
+        "name": other['name'],
+        "nid": other['nid'],
+        'dp': fs.url(other['dp']),
+    }
+
+    
+    db = DBConnect.getInstance()
+    collection = db["message"]
+    msgs=[]
+    myMsg=collection.find({"from":nid})
+    for i in myMsg:
+        print("hi2")
+        if(i['to']==usrNid):
+            print(i)
+
+    toMeMsg=collection.find({"to":nid})
+    for i in toMeMsg:
+        print(i)
+        print("hi3")
+
+    return render(request, "html/message.html",{"message":message})
+
+def saveMsg(request):
+    print("hi in save msg")
+    from_=request.GET['myNid']
+    to_ =request.GET['otherNid']
+    now_=datetime.datetime.now()
+    db = DBConnect.getInstance()
+    collection = db["message"]
+    msg=request.GET['message']
+    if(len(msg)==0):
+        return redirect(request.META.get('HTTP_REFERER'))
+    msgBlock={
+        "from":from_,
+        "to":to_,
+        "message":msg,
+        "time":now_,
+    }
+    collection.insert_one(msgBlock)
+    return redirect(request.META.get('HTTP_REFERER'))
 
 def bloodDonatin(request):
     return HttpResponse("this is blood donation")

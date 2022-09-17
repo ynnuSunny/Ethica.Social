@@ -45,4 +45,8 @@ urlpatterns = [
     path('meReact/<reactorNid>/', views.meReact,name="meReact"),  
     path('meReact/', views.meReact,name="meReact"),  
     path('showOnePost/', views.showOnePost,name="showOnePost"),  
+    path('messageOneToOne/', views.messageOneToOne,name="messageOneToOne"),
+    path('messageOneToOne/<nid>/', views.messageOneToOne,name="messageOneToOne"),
+    path('saveMsg/', views.saveMsg,name="saveMsg"),
 ]
+

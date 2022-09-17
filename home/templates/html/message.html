@@ -1,0 +1,148 @@
+
+
+<!DOCTYPE html>
+<html>
+{% load static %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>WorkWise Html Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/line-awesome.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/line-awesome-font-awesome.min.css' %}">
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.mCustomScrollbar.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/slick/slick.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'lib/slick/slick-theme.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}">
+</head>
+
+<body >
+    <div class="wrapper">
+
+        <section class="messages-page">
+            <div class="container">
+                <div class="messages-sec" style="margin-left:  200px ;">
+
+
+                        <div class="col-lg-8 col-md-12 pd-right-none pd-left-none" >
+                            <div class="main-conversation-box">
+                                <div class="message-bar-head">
+                                    <div class="usr-msg-details">
+                                        <div class="usr-ms-img">
+                                            <img src="{{message.otherInfo.dp}}" alt="">
+                                        </div>
+                                        <div class="usr-mg-info">
+                                            <h3>{{message.otherInfo.name}}</h3>
+                                            <p>Online</p>
+                                        </div>
+                                    </div>
+                                    <a href="#" title=""><i class="fa fa-ellipsis-v"></i></a>
+                                </div>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+
+                                <div class="messages-line" style="overflow-y: scroll;">
+
+                                    <div class="main-message-box st3">
+                                        <div class="message-dt st3">
+                                            <div class="message-inner-dt">
+                                                <p>Cras ultricies ligula.<img src="images/smley.png" alt=""></p>
+                                            </div>
+                                            <span>5 minutes ago</span>
+                                        </div>
+                                        <div class="messg-usr-img">
+                                            <img src="{{message.otherInfo.dp}}" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="main-message-box ta-right">
+                                        <div class="message-dt">
+                                            <div class="message-inner-dt">
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec rutrum
+                                                    congue leo eget malesuada. Vivamus suscipit tortor eget felis
+                                                    porttitor.</p>
+                                            </div>
+                                            <span>Sat, Aug 23, 1:08 PM</span>
+                                        </div>
+                                        <div class="messg-usr-img">
+                                            <img src="{{message.myInfo.dp}}" alt="">
+                                        </div>
+                                    </div>
+
+                                    <div class="main-message-box st3">
+                                        <div class="message-dt st3">
+                                            <div class="message-inner-dt">
+                                                <p>....</p>
+                                            </div>
+                                            <span>Typing...</span>
+                                        </div>
+                                        <div class="messg-usr-img">
+                                            <img src="{{message.otherInfo.dp}}" alt="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="message-send-area">
+                                    <form method="get" action="{% url 'saveMsg'%}">
+                                        <div class="mf-field">
+                                            <input type="text" name="message" placeholder="Type a message here">
+                                            <input type="hidden" name="myNid" value="{{message.myInfo.nid}}">
+                                            <input type="hidden" name="otherNid" value="{{message.otherInfo.nid}}">
+                                            <button type="submit">Send</button>
+                                        </div>
+<!--                                        <ul>-->
+<!--                                            <li><a href="#" title=""><i class="fas fa-smile"></i></a></li>-->
+<!--                                            <li><a href="#" title=""><i class="fas fa-camera"></i></a></li>-->
+<!--                                            <li><a href="#" title=""><i class="fas fa-paperclip"></i></a></li>-->
+<!--                                        </ul>-->
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                </div>
+            </div>
+        </section>
+        <footer>
+            <div class="footy-sec mn no-margin">
+                <div class="container">
+                    <ul>
+                        <li><a href="help-center.html" title="">Help Center</a></li>
+                        <li><a href="about.html" title="">About</a></li>
+                        <li><a href="#" title="">Privacy Policy</a></li>
+                        <li><a href="#" title="">Community Guidelines</a></li>
+                        <li><a href="#" title="">Cookies Policy</a></li>
+                        <li><a href="#" title="">Career</a></li>
+                        <li><a href="forum.html" title="">Forum</a></li>
+                        <li><a href="#" title="">Language</a></li>
+                        <li><a href="#" title="">Copyright Policy</a></li>
+                    </ul>
+                    <p><img src="images/copy-icon2.png" alt="">Copyright 2019</p>
+                    <img class="fl-rgt" src="images/logo2.png" alt="">
+                </div>
+            </div>
+        </footer>
+    </div>
+     <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/popper.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mCustomScrollbar.js"></script>
+    <script type="text/javascript" src="lib/slick/slick.min.js"></script>
+    <script type="text/javascript" src="js/scrollbar.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+</body>
+
+<!-- Mirrored from gambolthemes.net/workwise-new/messages.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 22 Aug 2022 09:38:03 GMT -->
+
+</html>
