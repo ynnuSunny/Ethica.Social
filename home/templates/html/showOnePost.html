@@ -122,7 +122,10 @@
                                             </div>
                                               {% endif %}
 
-                                            <a lass="post-jb active" href="{% url 'showOnePost' %}">Next</a>
+
+                                            <div class="message-btn" style="margin: 1px;">
+                                                        <a lass="post-jb active" href="{% url 'showOnePost' %}">Next</a>
+                                                    </div>
 
                                             <div class="process-comm">
                                                 <div class="spinner">
@@ -163,13 +166,13 @@
         {% endblock content %}
         
     </div>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/popper.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/jquery.mCustomScrollbar.js"></script>
-    <script type="text/javascript" src="lib/slick/slick.min.js"></script>
-    <script type="text/javascript" src="js/scrollbar.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/popper.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.mCustomScrollbar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/slick/slick.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/scrollbar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 </body>
 
 <!-- Mirrored from gambolthemes.net/workwise-new/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 22 Aug 2022 09:36:39 GMT -->

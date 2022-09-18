@@ -34,13 +34,14 @@
                     </div>
                     <div class="search-bar">
                         <form method = 'get', action="{% url 'search' %}">
-                            <input type="text" name="searchValue" placeholder="Search...">
                             <select name="searchBy" >
                                 <option value="name">Name</option>
                                 <option value="nid">Nid</option>
                                 <option value="location">Location</option>
                                 <option value="post">Post</option>
                             </select>
+                            <input type="text" name="searchValue" placeholder="Search...">
+
                             <button type="submit"><i class="la la-search"></i></button>
                             <!-- <input type="submit" name="search" value="search"> -->
                         </form>

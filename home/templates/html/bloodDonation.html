@@ -7,26 +7,30 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Ethica.Social</title>
+    <title>Feed</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+<script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/line-awesome.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/flatpickr.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/line-awesome.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/line-awesome-font-awesome.min.css' %}">
     <link href="{% static 'vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/font-awesome.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.mCustomScrollbar.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'lib/slick/slick.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'lib/slick/slick-theme.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/responsive.css' %}">
 </head>
 
-<body >
+
+<body>
     <div class="wrapper">
-        <header>
+       <header>
             <div class="container">
                 <div class="header-data">
                     <div class="logo">
@@ -35,13 +39,14 @@
                     <div class="search-bar">
                         <form method = 'get', action="{% url 'search' %}">
                             <input type="text" name="searchValue" placeholder="Search...">
+
+                            <button type="submit"><i class="la la-search"></i></button>
                             <select name="searchBy" >
                                 <option value="name">Name</option>
                                 <option value="nid">Nid</option>
                                 <option value="location">Location</option>
                                 <option value="post">Post</option>
                             </select>
-                            <button type="submit"><i class="la la-search"></i></button>
                             <!-- <input type="submit" name="search" value="search"> -->
                         </form>
                     </div>
@@ -150,109 +155,145 @@
                 </div>
             </div>
         </header>
-        <section class="messages-page">
-            <div class="container">
-                <div class="messages-sec" style="margin-left:  200px ;">
+        <main>
+            <div class="main-section">
+                <div class="container">
+                    <div class="main-section-data">
+                        <div class="row">
+                            <div class="col-lg-3 col-md-4 pd-left-none no-pd">
 
-
-                        <div class="col-lg-8 col-md-12 pd-right-none pd-left-none" >
-                            <div class="main-conversation-box">
-                                <div class="message-bar-head">
-                                    <div class="usr-msg-details">
-                                        <div class="usr-ms-img">
-                                            <img src="{{message.otherInfo.dp}}" alt="">
+                            </div>
+                            <div class="col-lg-6 col-md-8 no-pd">
+                                <div class="main-ws-sec">
+                                    <div class="post-topbar">
+                                        <div class="user-picy">
+                                            <img src="images/resources/user-pic.png" alt="">
                                         </div>
-                                        <div class="usr-mg-info">
-                                            <h3>{{message.otherInfo.name}}</h3>
-                                            <p>Online</p>
+                                        <div class="post-st">
+                                            <ul>
+
+                                                <li><a class="post-jb active" href="#" title="">Post a Job</a></li>
+                                            </ul>
                                         </div>
                                     </div>
-                                    <a href="#" title=""><i class="fa fa-ellipsis-v"></i></a>
+                                    <div class="posts-section">
+
+                                        {% for post in posts%}
+                                        <div class="post-bar">
+                                            <div class="post_topbar">
+                                                    <div class="usy-dt" >
+                                                        <img src="{{post.dp}}" alt="" style="border-radius: 50%;width: 50px;">
+                                                        <div class="usy-name">
+                                                            <h3> <a href="{% url 'othersProfile' %}?nid={{post.nid}}">{{post.name}}</a>{{x.posterName}}</h3>
+                                                            <span><img src="{%static 'images/clock.png' %}" alt="">posted on : {{post.time}}</span>
+                                                        </div>
+                                                    </div>
+                                            </div>
+
+                                         <div class="job_descp">
+                                             <br>
+                                                {% if post.description is not none %}
+                                                    <p>{{post.description}}</p>
+                                                {% endif %}
+                                             <h2 style="color:red;" >{{post.bloodGroup}}</h2>
+
+                                             <h2>location: {{post.location}}</h2>
+                                                <p>{{post.mobileNo}}</p>
+                                               <div class="message-btn" style="margin: 1px;">
+                                                        <a href="{% url 'messageOneToOne' %}?nid={{post.nid}}">
+                                                            Knock</a>
+                                                    </div>
+
+                                            </div>
+                                          </div>
+
+
+
+
+
+
+
                                 </div>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
-                                <br>
+                                {% endfor %}
 
-                                <div class="messages-line" style="overflow-y: scroll;">
-                                 {% for msg in message.conversation%}
-
-
-                                    {% if msg.from == message.otherInfo.nid %}
-                                        <div class="main-message-box st3">
-                                            <div class="message-dt st3">
-                                                <div class="message-inner-dt">
-                                                    <p>{{ msg.message }}</p>
-                                                </div>
-                                                <span>{{ msg.time }}</span>
+                                        <div class="process-comm">
+                                            <div class="spinner">
+                                                <div class="bounce1"></div>
+                                                <div class="bounce2"></div>
+                                                <div class="bounce3"></div>
                                             </div>
-                                            <div class="messg-usr-img">
-                                                <img src="{{message.otherInfo.dp}}" alt="">
-                                            </div>
-                                        </div>
-                                    {% endif %}
-                                    {% if msg.from == message.myInfo.nid %}
-                                        <div class="main-message-box ta-right"  >
-                                            <div class="message-dt"  style="margin-left:  400px ;">
-                                                <div class="message-inner-dt">
-                                                     <p>{{ msg.message }}</p>
-                                                </div>
-                                                <span>{{ msg.time }}</span>
-                                            </div>
-                                            <div class="messg-usr-img">
-                                                <img src="{{message.myInfo.dp}}" alt="">
-                                            </div>
-                                        </div>
-                                    {% endif %}
-                                    {% endfor %}
-
-                                    <div class="main-message-box st3">
-                                        <div class="message-dt st3">
-                                            <div class="message-inner-dt">
-                                                <p>....</p>
-                                            </div>
-                                            <span>Typing...</span>
-                                        </div>
-                                        <div class="messg-usr-img">
-                                            <img src="{{message.otherInfo.dp}}" alt="">
                                         </div>
                                     </div>
-                                </div>
-                                <div class="message-send-area">
-                                    <form method="get" action="{% url 'saveMsg'%}">
-                                        <div class="mf-field">
-                                            <input type="text" name="message" placeholder="Type a message here">
-                                            <input type="hidden" name="myNid" value="{{message.myInfo.nid}}">
-                                            <input type="hidden" name="otherNid" value="{{message.otherInfo.nid}}">
-                                            <button type="submit">Send</button>
-                                        </div>
-<!--                                        <ul>-->
-<!--                                            <li><a href="#" title=""><i class="fas fa-smile"></i></a></li>-->
-<!--                                            <li><a href="#" title=""><i class="fas fa-camera"></i></a></li>-->
-<!--                                            <li><a href="#" title=""><i class="fas fa-paperclip"></i></a></li>-->
-<!--                                        </ul>-->
-                                    </form>
+
                                 </div>
                             </div>
+                            <div class="col-lg-3 pd-right-none no-pd">
 
+                            </div>
                         </div>
+                    </div>
                 </div>
             </div>
-        </section>
+        </main>
+        <div class="post-popup pst-pj">
+
+        </div>
+        <div class="post-popup job_post">
+            <div class="post-project">
+                <h3>Ask For Blood </h3>
+                <div class="post-project-fields">
+                    <form method="get" action="{% url 'addBloodPost' %}">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <input type="text" name="description" placeholder="Description">
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="inp-field">
+                                    <select required name="bloodGroup">
+                                        <option value="" disabled selected>Select Blood Group</option>
+                                        <option>A+</option>
+                                        <option>A-</option>
+                                        <option>B+</option>
+                                        <option>B-</option>
+                                        <option>AB+</option>
+                                        <option>AB-</option>
+                                        <option>O+</option>
+                                        <option>O-</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <input type="tel" name="mobileNo" placeholder="Moblie Number">
+                            </div>
+                            <div class="col-lg-12" >
+                                <input type="text"  name="location" placeholder="Location" required>
+                            </div>
+
+
+
+                            <div class="col-lg-12">
+                                <ul>
+                                    <li><button class="active" type="submit" value="post">Post</button></li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <a href="#" title=""><i class="la la-times-circle-o"></i></a>
+            </div>
+        </div>
 
     </div>
-     <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/popper.js"></script>
-    <script type="text/javascript" src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/jquery.mCustomScrollbar.js"></script>
-    <script type="text/javascript" src="lib/slick/slick.min.js"></script>
-    <script type="text/javascript" src="js/scrollbar.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/popper.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.mCustomScrollbar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'lib/slick/slick.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/scrollbar.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 </body>
 
-<!-- Mirrored from gambolthemes.net/workwise-new/messages.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 22 Aug 2022 09:38:03 GMT -->
+<!-- Mirrored from gambolthemes.net/workwise-new/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Mon, 22 Aug 2022 09:58:14 GMT -->
 
 </html>

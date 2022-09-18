@@ -114,7 +114,24 @@
                                             country : {{country}} <br>
 
                                         </div>
+                                        <div >
+                                            <ul>
+                                                <li>
+                                                    <div class="message-btn" style="margin: 1px;">
+                                                        <a href="{% url 'messageOneToOne' %}?nid={{nid}}">
+                                                            Messages</a>
+                                                    </div>
+                                                </li>
+
+
+
+                                            </ul>
+                                        </div>
+
                                     </div>
+                                    <br>
+                                    <br>
+                                    <br>
                                     <div class="product-feed-tab current" id="feed-dd">
                                         {% for x in posts %}
                                         <div class="posts-section">

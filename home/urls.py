@@ -48,5 +48,6 @@ urlpatterns = [
     path('messageOneToOne/', views.messageOneToOne,name="messageOneToOne"),
     path('messageOneToOne/<nid>/', views.messageOneToOne,name="messageOneToOne"),
     path('saveMsg/', views.saveMsg,name="saveMsg"),
+    path('addBloodPost/', views.addBloodPost,name="addBloodPost"),
 ]
 

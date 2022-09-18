@@ -1,4 +1,5 @@
 {% extends 'html/base.html' %}
+{% load static %}
 {% block content %}
   {% if msg is not none %}
 
@@ -27,7 +28,10 @@ buy reactions
 
 {% for i in reactionBuy %}
 <form method="get" action="{%  url 'buyReaction' %} ">
+
+
     <input type="submit"  name="buyReaction" value="{{i}}">
+
 </form>
 {% endfor %}
 {% endblock content %}

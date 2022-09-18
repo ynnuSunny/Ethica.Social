@@ -28,8 +28,8 @@ class DBConnect:
 
 
 def sendMail(request, to_):
-    email_addr = 'ethica.social@gmail.com'
-    email_passwd = 'kdagmfctdgqyxifl'
+    email_addr = 'ethica.social02@gmail.com'
+    email_passwd = 'oyfosrfwzpwqpihm'
     smtpserver = smtplib.SMTP("smtp.gmail.com", 587)
     smtpserver.ehlo()
     smtpserver.starttls()

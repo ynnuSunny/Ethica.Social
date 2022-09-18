@@ -326,7 +326,7 @@ def updateUsrMaxPostView(request):
 
 def settings(request):
     nid=request.session['nid']
-    reactions=["haha", "love", "angry","dislike","sad","surprised", "fear","surprised"]
+    reactions=["haha", "love", "angry","dislike","sad","surprised", "fear","disgust"]
     
     db=DBConnect.getInstance()
     collection=db["user"]
@@ -1068,31 +1068,30 @@ def messageOneToOne(request):
 
     message['myInfo']=myData
     message['otherInfo']={
-
         "name": other['name'],
         "nid": other['nid'],
         'dp': fs.url(other['dp']),
     }
 
-    
+
     db = DBConnect.getInstance()
     collection = db["message"]
     msgs=[]
-    myMsg=collection.find({"from":nid})
+    myMsg=collection.find({"from":nid,"to":usrNid})
     for i in myMsg:
-        print("hi2")
-        if(i['to']==usrNid):
-            print(i)
+        msgs.append(i)
 
-    toMeMsg=collection.find({"to":nid})
+    toMeMsg=collection.find({"from":usrNid,"to":nid})
     for i in toMeMsg:
-        print(i)
-        print("hi3")
+        msgs.append(i)
+
+    msgs=sorted(msgs,key=lambda d: d['time'])
+    message['conversation']=msgs
 
     return render(request, "html/message.html",{"message":message})
 
 def saveMsg(request):
-    print("hi in save msg")
+
     from_=request.GET['myNid']
     to_ =request.GET['otherNid']
     now_=datetime.datetime.now()
@@ -1111,7 +1110,49 @@ def saveMsg(request):
     return redirect(request.META.get('HTTP_REFERER'))
 
 def bloodDonatin(request):
-    return HttpResponse("this is blood donation")
+    nid=request.session['nid']
+    db = DBConnect.getInstance()
+    collection = db["bloodPost"]
+    allPosts=collection.find({})
+    fs = FileSystemStorage()
+    bloodPosts=[]
+    for i in allPosts:
+        if(i['nid']==nid):
+            continue
+        i['viewer']=nid
+        u=getUsr(i['nid'])
+        i['name']=u['name']
+        i['dp']=fs.url(u['dp'])
+
+        bloodPosts.append(i)
+    bloodPosts = sorted(bloodPosts, key=lambda d: d['time'])
+
+    return render(request,"html/bloodDonation.html",{"posts":bloodPosts})
+def addBloodPost(request):
+    nid=request.session['nid']
+    description=request.GET['description']
+    if(len(description)==0):
+        description=None
+    bloodGroup=request.GET['bloodGroup']
+    mobileNo=request.GET['mobileNo']
+    if(len(mobileNo)<5):
+        mobileNo=None
+    location=request.GET['location']
+    db = DBConnect.getInstance()
+    collection = db["bloodPost"]
+    post={
+        "nid":nid,
+        "description":description,
+        "bloodGroup":bloodGroup,
+        "location":location,
+        "mobileNo":mobileNo,
+        "time":datetime.datetime.now(),
+        "comments":[]
+    }
+    collection.insert_one(post)
+
+
+    return redirect(request.META.get('HTTP_REFERER'))
 
 def shop(request):
     return HttpResponse("this is shop")
